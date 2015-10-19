@@ -11,6 +11,12 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function resolve(resources, identifier) {
+  return resources.find(function (resource) {
+    return resource._type === identifier.type && resource._id === identifier.id;
+  });
+}
+
 var ResourceObject = (function () {
   function ResourceObject(record) {
     _classCallCheck(this, ResourceObject);
@@ -112,12 +118,6 @@ function deserialize(document) {
   });
 
   return data;
-}
-
-function resolve(resources, identifier) {
-  return resources.find(function (resource) {
-    return resource._type === identifier.type && resource._id === identifier.id;
-  });
 }
 
 exports.ResourceObject = ResourceObject;
