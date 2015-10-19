@@ -1,0 +1,22 @@
+{
+  "name": "simple-jsonapi",
+  "version": "0.1.0",
+  "authors": [
+    "Erik Youngren <erik@youngren.us>"
+  ],
+  "description": "A simple, no schema requires, JSON API library.",
+  "main": "simple-jsonapi.js",
+  "keywords": [
+    "jsonapi",
+    "json-api",
+    "bower"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
