@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "browserify lib/simple-jsonapi.js --standalone SimpleJsonApi > simple-jsonapi.js"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0"
+  },
+  "browserify": {
+    "sourceType": [
+      "module"
+    ],
+    "transform": [
+      [
+        "babelify",
+        {
+          "blacklist": [
+            "regenerator"
+          ]
+        }
+      ]
+    ]
+  }
+}
