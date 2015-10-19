@@ -75,6 +75,10 @@ Clone and install development dependencies:
     cd simple-jsonapi
     npm install
 
-After making changes to `./lib/simple-jsonapi.js`, compile the ES6 source to ES5 with:
+After making changes to `./lib/simple-jsonapi.js`, compile the ES6
+source to ES5 with:
 
     npm run build
+
+`npm build` is also run pre-commit. Any changes made directly to the
+build target will be lost.
