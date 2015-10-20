@@ -28,6 +28,8 @@ If you are using Polymer, simply import `simple-jsonapi.html`, which will source
 
     <link rel="import" href="../simple-jsonapi/simple-jsonapi.html">
 
+Also, consider checking out [jsonapi-resource](https://github.com/Artanis/jsonapi-resource), a Polymer element that provides a declarative interface to `simple-jsonapi`.
+
 ### `ResourceObject`s
 
 Top-level members are copied into underscore-prefixed names, while attributes and resolved relationships are placed into the object root. For example:
