@@ -52,37 +52,41 @@ var ResourceObject = (function () {
   _createClass(ResourceObject, [{
     key: "derefRelationships",
     value: function derefRelationships(resources) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      // ResourceObjects with no relationships tend to have the relationships
+      // member omitted, and thus undefined.
+      if (this._relationships !== undefined) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = Object.keys(this._relationships)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _name = _step.value;
-
-          var related = this._relationships[_name];
-
-          var result = undefined;
-          if (Array.isArray(related.data)) {
-            result = related.data.map(resolve.bind(undefined, resources)).filter(function (n) {
-              return n !== undefined;
-            });
-          } else {
-            result = resolve(resources, related.data);
-          }
-          this[_name] = result;
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator["return"]) {
-            _iterator["return"]();
+          for (var _iterator = Object.keys(this._relationships)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _name = _step.value;
+
+            var related = this._relationships[_name];
+
+            var result = undefined;
+            if (Array.isArray(related.data)) {
+              result = related.data.map(resolve.bind(undefined, resources)).filter(function (n) {
+                return n !== undefined;
+              });
+            } else {
+              result = resolve(resources, related.data);
+            }
+            this[_name] = result;
           }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
           }
         }
       }
