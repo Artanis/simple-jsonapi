@@ -1,6 +1,6 @@
 # `simple-jsonapi`
 
-`simple-jsonapi` is a small JSON API client library. It will transform JSON API compliant response data into easy-to-use objects, with relationships between the records in the response resolved.
+`simple-jsonapi` is a small [JSON API](https://jsonapi.org) client library. It will transform JSON API compliant response data into easy-to-use objects, with relationships between the records in the response resolved.
 
 ## Installation
 
