@@ -22,6 +22,12 @@ the primary data.
 
     var data = SimpleJsonApi.deserialize(response);
 
+### Polymer
+
+If you are using Polymer, simply import `simple-jsonapi.html`, which will source the javascript file for you:
+
+    <link rel="import" href="../simple-jsonapi/simple-jsonapi.html">
+
 ### `ResourceObject`s
 
 Top-level members are copied into underscore-prefixed names, while attributes and resolved relationships are placed into the object root. For example:
