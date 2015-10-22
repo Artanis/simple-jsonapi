@@ -97,6 +97,10 @@ var ResourceObject = (function () {
 })();
 
 function deserialize(document) {
+  if (document.data === undefined) {
+    return undefined;
+  }
+
   // Deserialize primary data.
   var data = undefined;
   if (Array.isArray(document.data)) {
@@ -116,10 +120,14 @@ function deserialize(document) {
   // Dereferencing relationships is in a second pass to avoid
   // complications with cyclic relationships. Single-pass solutions that
   // don't break Polymer are very much welcome!
-  var resources = [].concat(data, included);
-  resources.forEach(function (resourceObject) {
-    resourceObject.derefRelationships(resources);
-  });
+  if (document.included !== undefined) {
+    (function () {
+      var resources = [].concat(data, included);
+      resources.forEach(function (resourceObject) {
+        resourceObject.derefRelationships(resources);
+      });
+    })();
+  }
 
   return data;
 }
