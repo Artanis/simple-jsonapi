@@ -111,17 +111,17 @@ function deserialize(document) {
     data = new ResourceObject(document.data);
   }
 
-  // Deserialize included data seperately. Primary data will be returned,
-  // but included data will only be accessible through their relationships.
-  var included = document.included.map(function (record) {
-    return new ResourceObject(record);
-  });
-
-  // Dereferencing relationships is in a second pass to avoid
-  // complications with cyclic relationships. Single-pass solutions that
-  // don't break Polymer are very much welcome!
   if (document.included !== undefined) {
     (function () {
+      // Deserialize included data seperately. Primary data will be returned,
+      // but included data will only be accessible through their relationships.
+      var included = document.included.map(function (record) {
+        return new ResourceObject(record);
+      });
+
+      // Dereferencing relationships is in a second pass to avoid
+      // complications with cyclic relationships. Single-pass solutions that
+      // don't break Polymer are very much welcome!
       var resources = [].concat(data, included);
       resources.forEach(function (resourceObject) {
         resourceObject.derefRelationships(resources);
