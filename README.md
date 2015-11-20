@@ -10,70 +10,42 @@
 
 ## Usage
 
-Browserify is configured to export `simple-jsonapi`to the global name `SimpleJsonApi`.
+After you fetch and parse the JSON-API response from the server:
 
-### Deserializing a JSON API document
+    var result = SimpleJsonApi.deserialize(response);
 
-The `deserialize()` function will transform a JSON API response into
-`ResourceObject`s. If the response was a single resource object, it will return a representation of that object. If the response was a collection of resource objects, it will return an array of objects.
+If the response is a collection (e.g.: `https://jsonapi.example.com/articles`), you will have an array of deserialized objects.
 
-If the response was a compound document, with related resources included, those relationships will be resolved. Included documents are not returned, and are only available through relationships on objects in
-the primary data.
+If the response is a single object (`https://jsonapi.example.com/articles/1`), it will be a single object.
 
-    var data = SimpleJsonApi.deserialize(response);
+In both cases, relationships between all objects in the response document will have been resolved.
+
+The deserialized objects will have attributes and relationships available at the top-level, alongside `type`, `id`, `meta`, and `links`.
 
 ### Polymer
 
-If you are using Polymer, simply import `simple-jsonapi.html`, which will source the javascript file for you:
+If you are using this library with Polymer, simply import `simple-jsonapi.html`, which will source the javascript file for you:
 
     <link rel="import" href="../simple-jsonapi/simple-jsonapi.html">
 
+If multiple components use the library this way, it will only be loaded once.
+
 Also, consider checking out [jsonapi-resource](https://github.com/Artanis/jsonapi-resource), a Polymer element that provides a declarative interface to `simple-jsonapi`.
 
-### `ResourceObject`s
+## Examples
 
-Top-level members are copied into underscore-prefixed names, while attributes and resolved relationships are placed into the object root. For example:
+### Multiple requests
 
-    var response = {
-      data: {
-        type: "article",
-        id: "1",
-        attributes: {
-          title: "JSON API paints my bikeshed!",
-          body: "Shortest article. Ever."
-        },
-        relationships: {
-          author: {
-            data: {type: "people", id: "9"}
-          }
-        }
-      },
-      included: [
-        {type: "people", id: "9", attributes: {name: "Dan Gebhardt"}}
-      ]};
+It is possible to dereference relationships between documents made through multiple requests and subsequent deserializations.
 
-    var resobject = SimpleJsonApi.deserialize();
+    var store = [];
+    var result1 = SimpleJsonApi.deserialize(response, store);
 
-    console.log(resobject);
-    // ResourceObject {
-    //   _type: "article",
-    //   _id: "1",
-    //   _attributes: {...},
-    //   _relationships: {...},
-    //   _meta: undefined,
-    //   _links: undefined,
-    //   title: "JSON API paints my bikeshed!",
-    //   body: "Shortest article. Ever.",
-    //   author: ResourceObject {
-    //     _type: "people",
-    //     _id: "9",
-    //     _attributes: {...},
-    //     _relationships: {},
-    //     _meta: undefined,
-    //     _links: undefined,
-    //     name: "Dab Gebhardt"
-    //   }
-    // }
+ The array `store` contains all the records found in the response, as well as identifiers referenced by relationships that weren't satisfied by the response.
+
+    var result2 = SimpleJsonApi.deserialize(response2, store);
+
+Since store already had objects in it, these are used to dereference relationships in the new response. However, since the relationships of already deserialized objects use references to objects in this array that are merely updated and never replaced, those relationships _also_ become resolved.
 
 ## Development
 
@@ -88,5 +60,4 @@ source to ES5 with:
 
     npm run build
 
-`npm build` is also run pre-commit. Any changes made directly to the
-build target will be lost.
+Remember to execute this comment before committing any changes!
